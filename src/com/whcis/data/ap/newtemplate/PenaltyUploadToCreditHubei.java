@@ -12,13 +12,13 @@ import jxl.Sheet;
 import jxl.Workbook;
 
 public class PenalyToDataBase {
-//    private static String url_ser = "jdbc:mysql://192.168.18.110:3306/upload_to_xychina?useSSL=false";
-//
-//    private static String user_ser = "zxdc";
-//
-//    private static String password_ser = "zxdc";
-//
-//    private static Connection con_ser;
+    private static String url_ser = "jdbc:mysql://192.168.18.110:3306/upload_to_xychina?useSSL=false";
+
+    private static String user_ser = "zxdc";
+
+    private static String password_ser = "zxdc";
+
+    private static Connection con_ser;
     
     private static String url_my = "jdbc:mysql://localhost:3306/db_credit_test?useSSL=false";
 
@@ -28,7 +28,7 @@ public class PenalyToDataBase {
 
     private static Connection con_my;
 
-    private static String sPath = "/Users/neo/Downloads/20161123/NP2016-11-14.xls";
+    private static String sPath = "/Users/neo/Downloads/20161123/NPN2016-11-14.xls";
 
     static {
         try {
@@ -50,8 +50,8 @@ public class PenalyToDataBase {
 
     private static void openDatabase() {
         try {
-//            con_ser = DriverManager.getConnection(url_ser, user_ser, password_ser);
-            con_my = DriverManager.getConnection(url_my, user_my, password_my);
+            con_ser = DriverManager.getConnection(url_ser, user_ser, password_ser);
+//            con_my = DriverManager.getConnection(url_my, user_my, password_my);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -81,23 +81,23 @@ public class PenalyToDataBase {
             if (PenalyWHBean.CF_WSH.contains("表格说明") || PenalyWHBean.isEmpty()) {
                 return;
             }
-//            // 查重
-//            ResultSet rs = con_ser.createStatement().executeQuery("select count(*) as rowCount from penaly_tem where " + PenalyWHBean.toID());
-//            // System.out.println("select count(*) as rowCount from penaly_tem where "
-//            // + PenalyWHBean.toID());
-//            rs.next();
-//            if (rs.getInt("rowCount") > 0) {
-//                System.out.println(PenalyWHBean.toValues());
-//                return;
-//            }
-//            con_ser.createStatement()
-//                    .execute(
-//                            "INSERT INTO penaly_tem (`CF_WSH`,`CF_CFMC`,`CF_CFLB1`,`CF_CFLB2`,`CF_SY`,`CF_YJ`,`CF_XDR_MC`,`CF_XDR_SHXYM`,`CF_XDR_ZDM`,`CF_XDR_GSDJ`,`CF_XDR_SWDJ`,`CF_XDR_SFZ`,`CF_FR`,`CF_JG`,`CF_JDRQ`,`CF_XZJG`,`CF_ZT`,`DFBM`,`SJC`,`BZ`) VALUES "
-//                                    + PenalyWHBean.toValues());
-            con_my.createStatement()
+            // 查重
+            ResultSet rs = con_ser.createStatement().executeQuery("select count(*) as rowCount from penaly_tem where " + PenalyWHBean.toID());
+            // System.out.println("select count(*) as rowCount from penaly_tem where "
+            // + PenalyWHBean.toID());
+            rs.next();
+            if (rs.getInt("rowCount") > 0) {
+                System.out.println(PenalyWHBean.toValues());
+                return;
+            }
+            con_ser.createStatement()
                     .execute(
-                            "INSERT INTO tab_penaly_wuhan_month (`CF_WSH`,`CF_CFMC`,`CF_CFLB1`,`CF_CFLB2`,`CF_SY`,`CF_YJ`,`CF_XDR_MC`,`CF_XDR_SHXYM`,`CF_XDR_ZDM`,`CF_XDR_GSDJ`,`CF_XDR_SWDJ`,`CF_XDR_SFZ`,`CF_FR`,`CF_JG`,`CF_JDRQ`,`CF_XZJG`,`CF_ZT`,`DFBM`,`SJC`,`BZ`) VALUES "
+                            "INSERT INTO penaly_tem (`CF_WSH`,`CF_CFMC`,`CF_CFLB1`,`CF_CFLB2`,`CF_SY`,`CF_YJ`,`CF_XDR_MC`,`CF_XDR_SHXYM`,`CF_XDR_ZDM`,`CF_XDR_GSDJ`,`CF_XDR_SWDJ`,`CF_XDR_SFZ`,`CF_FR`,`CF_JG`,`CF_JDRQ`,`CF_XZJG`,`CF_ZT`,`DFBM`,`SJC`,`BZ`) VALUES "
                                     + PenalyWHBean.toValues());
+//            con_my.createStatement()
+//                    .execute(
+//                            "INSERT INTO tab_penaly_wuhan_month (`CF_WSH`,`CF_CFMC`,`CF_CFLB1`,`CF_CFLB2`,`CF_SY`,`CF_YJ`,`CF_XDR_MC`,`CF_XDR_SHXYM`,`CF_XDR_ZDM`,`CF_XDR_GSDJ`,`CF_XDR_SWDJ`,`CF_XDR_SFZ`,`CF_FR`,`CF_JG`,`CF_JDRQ`,`CF_XZJG`,`CF_ZT`,`DFBM`,`SJC`,`BZ`) VALUES "
+//                                    + PenalyWHBean.toValues());
         } catch (Exception e) {
             e.printStackTrace();
             System.out
