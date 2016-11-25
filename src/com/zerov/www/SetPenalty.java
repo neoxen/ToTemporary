@@ -17,7 +17,7 @@ public class SetPenalty {
 
     private static String user_my = "root";
 
-    private static String password_my = "ShanShi@1989";
+    private static String password_my = "kaifa001";
 
     private static Connection con_my;
 
@@ -37,9 +37,11 @@ public class SetPenalty {
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
+        System.out.println("Importing to server ... ...");
         initDataBase();
         getName();
         setData();
+        System.out.println("Finish importing!");
 
     }
 
@@ -85,7 +87,7 @@ public class SetPenalty {
             while (rs_my.next()) {
                 String sql = "";
                 try {
-                    sql = "INSERT INTO ap_administrative_penalty_temp (`object_name`,`current_state`,`legal_rep`,`credit_code`,`org_code`,`ic_code`,`tax_code`,`identity_code`,`title`,`penalty_type`,`penalty_code`,`penalty_cause`,`penalty_basis`,`penalty_result`,`effective_date`,`invalid_date`,`penalty_organ`,`local_code`,`update_time`,`remark`) VALUES ("
+                    sql = "INSERT INTO ap_administrative_penalty_temp (`object_name`,`current_state`,`legal_rep`,`credit_code`,`org_code`,`ic_code`,`tax_code`,`identity_code`,`title`,`penalty_type`,`penalty_code`,`penalty_cause`,`penalty_basis`,`penalty_result`,`effective_date`,`invalid_date`,`penalty_organ`,`local_code`,`update_time`,`remark`, `import_date`) VALUES ("
                             + withNull(rs_my.getString("CF_XDR_MC"))
                             + ","
                             + toState(withNull(rs_my.getString("CF_ZT")))
@@ -116,20 +118,32 @@ public class SetPenalty {
                             + ","
                             + withNullDate(rs_my.getDate("CF_JDRQ"))
                             + ","
-                            + withNullDate(rs_my.getDate("CF_JZRQ")) + "," + toCode(withNull(rs_my.getString("CF_XZJG")))// 转为代码
-                            + "," + withNull(rs_my.getString("DFBM")) + "," + withNullDate(rs_my.getDate("SJC")) + "," + withNull(rs_my.getString("BZ")) + ")";
+                            + withNullDate(rs_my.getDate("CF_JZRQ"))
+                            + ","
+                            + toCode(withNull(rs_my.getString("CF_XZJG")))// 转为代码
+                            + ","
+                            + withNull(rs_my.getString("DFBM"))
+                            + ","
+                            + withNullDate(rs_my.getDate("SJC"))
+                            + ","
+                            + withNull(rs_my.getString("BZ"))
+                            + ","
+                            + importDate()
+                            + ")";
 
                     ResultSet rs = con_ser.createStatement().executeQuery(
                             "select count(*) as rowCount from ap_administrative_penalty_temp where "
                                     + toID(rs_my.getString("CF_WSH"), rs_my.getString("CF_CFMC"), rs_my.getString("CF_SY"), rs_my.getString("CF_XDR_MC"), rs_my.getString("CF_JG")));
                     rs.next();
                     if (rs.getInt("rowCount") > 0) {
-                        System.out.println(rs_my.getInt("id"));
+                        System.out.println(rs_my.getInt("id") + " duplicated");
+                        System.out.println(sql);
                         continue;
                     }
 
                     st_ser.executeUpdate(sql);
                 } catch (Exception e) {
+                    System.out.println(rs_my.getInt("id") + " failed");
                     System.out.println(sql);
                     e.printStackTrace();
                 }
@@ -260,6 +274,10 @@ public class SetPenalty {
         if (date == null)
             return "null";
         return "'" + sdf1.format(date) + "'";
+    }
+
+    private static String importDate() {
+        return "'" + sdf1.format(new java.util.Date()) + "'";
     }
 
     private static void initDataBase() {

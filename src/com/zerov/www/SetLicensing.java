@@ -1,25 +1,18 @@
 
 package com.zerov.www;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import cn.com.zerov.www.PermissonWHBean;
 
 public class SetLicensing {
     private static String url_my = "jdbc:mysql://localhost:3306/db_credit_test?useSSL=false";
 
     private static String user_my = "root";
 
-    private static String password_my = "ShanShi@1989";
+    private static String password_my = "kaifa001";
 
     private static Connection con_my;
 
@@ -39,10 +32,11 @@ public class SetLicensing {
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
-
+        System.out.println("Importing to server ... ...");
         initDataBase();
         getName();
         setData();
+        System.out.println("Finish importing!");
 
     }
 
@@ -87,9 +81,9 @@ public class SetLicensing {
             rs_my = st_my.executeQuery("select * from tab_permisson_wuhan_month");
             while (rs_my.next()) {
                 String sql = "";
-                System.out.println(rs_my.getInt("id"));
+
                 try {
-                    sql = "INSERT INTO ap_administrative_licensing_temp (`object_name`,`current_state`,`legal_rep`,`credit_code`,`org_code`,`ic_code`,`tax_code`,`identity_code`,`title`,`licensing_type`,`licensing_code`,`licensing_detail`,`effective_date`,`invalid_date`,`licensing_organ`,`local_code`,`update_time`,`remark`) VALUES ("
+                    sql = "INSERT INTO ap_administrative_licensing_temp (`object_name`,`current_state`,`legal_rep`,`credit_code`,`org_code`,`ic_code`,`tax_code`,`identity_code`,`title`,`licensing_type`,`licensing_code`,`licensing_detail`,`effective_date`,`invalid_date`,`licensing_organ`,`local_code`,`update_time`,`remark`, `import_date`) VALUES ("
                             + withNull(rs_my.getString("XK_XDR"))
                             + ","
                             + toState(withNull(rs_my.getString("XK_ZT")))
@@ -114,8 +108,20 @@ public class SetLicensing {
                             + ","
                             + withNull(rs_my.getString("XK_NR"))
                             + ","
-                            + withNullDate(rs_my.getDate("XK_JDRQ")) + "," + withNullDate(rs_my.getDate("XK_JZQ")) + "," + toCode(withNull(rs_my.getString("XK_XZJG")))// 转为代码
-                            + "," + withNull(rs_my.getString("DFBM")) + "," + withNullDate(rs_my.getDate("SJC")) + "," + withNull(rs_my.getString("BZ")) + ")";
+                            + withNullDate(rs_my.getDate("XK_JDRQ"))
+                            + ","
+                            + withNullDate(rs_my.getDate("XK_JZQ"))
+                            + ","
+                            + toCode(withNull(rs_my.getString("XK_XZJG")))// 转为代码
+                            + ","
+                            + withNull(rs_my.getString("DFBM"))
+                            + ","
+                            + withNullDate(rs_my.getDate("SJC"))
+                            + ","
+                            + withNull(rs_my.getString("BZ"))
+                            + ","
+                            + importDate()
+                            + ")";
 
                     // 查重
                     ResultSet rs = con_ser.createStatement().executeQuery(
@@ -123,12 +129,14 @@ public class SetLicensing {
                                     + toID(rs_my.getString("XK_WSH"), rs_my.getString("XK_XMMC"), rs_my.getString("XK_NR"), rs_my.getString("XK_XDR")));
                     rs.next();
                     if (rs.getInt("rowCount") > 0) {
+                        System.out.println(rs_my.getInt("id") + " duplicated");
                         System.out.println(sql);
                         continue;
                     }
 
                     st_ser.executeUpdate(sql);
                 } catch (Exception e) {
+                    System.out.println(rs_my.getInt("id") + " failed");
                     System.out.println(sql);
                     e.printStackTrace();
                 }
@@ -215,6 +223,10 @@ public class SetLicensing {
         if (date == null)
             return "null";
         return "'" + sdf1.format(date) + "'";
+    }
+
+    private static String importDate() {
+        return "'" + sdf1.format(new java.util.Date()) + "'";
     }
 
     private static void initDataBase() {

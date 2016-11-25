@@ -24,11 +24,11 @@ public class PenalyToDataBase {
 
     private static String user_my = "root";
 
-    private static String password_my = "ShanShi@1989";
+    private static String password_my = "kaifa001";
 
     private static Connection con_my;
 
-    private static String sPath = "/Users/zerov1989/Downloads/data/data_1.xls";
+    private static String sPath = "/Users/neo/Downloads/20161123/NPN1121.xls";
 
     static {
         try {
@@ -60,7 +60,7 @@ public class PenalyToDataBase {
     private static void writeToDatabase() {
         try {
             Workbook readWB = Workbook.getWorkbook(new File(sPath));
-            Sheet readsheet = readWB.getSheet(1);
+            Sheet readsheet = readWB.getSheet(0);
             int rsColumns = readsheet.getColumns();
             int rsRows = readsheet.getRows();
             for (int i = 1; i < rsRows; i++) {

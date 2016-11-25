@@ -17,7 +17,7 @@ public class LicensingToDataBase {
     
      private static String user_my = "root";
     
-     private static String password_my = "ShanShi@1989";
+     private static String password_my = "kaifa001";
     
      private static Connection con_my;
 
@@ -29,7 +29,7 @@ public class LicensingToDataBase {
 //
 //    private static Connection con_ser;
 
-    private static String sPath = "/Users/zerov1989/Downloads/data/data_1.xls";
+    private static String sPath = "/Users/neo/Downloads/20161123/L1121.xls";
 
     static {
         try {
@@ -106,6 +106,7 @@ public class LicensingToDataBase {
             System.out
                     .println("INSERT INTO tab_permisson_wuhan_month (`XK_WSH`,`XK_XMMC`,`XK_SPLB`,`XK_NR`,`XK_XDR`,`XK_XDR_SHXYM`,`XK_XDR_ZDM`,`XK_XDR_GSDJ`,`XK_XDR_SWDJ`,`XK_XDR_SFZ`,`XK_FR`,`XK_JDRQ`,`XK_JZQ`,`XK_XZJG`,`XK_ZT`,`DFBM`,`SJC`,`BZ`) VALUES "
                             + PermissonWHBean.toValues());
+            e.printStackTrace();
         } finally {
             PermissonWHBean.clean();
         }
