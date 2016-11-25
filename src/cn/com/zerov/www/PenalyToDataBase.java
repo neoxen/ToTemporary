@@ -28,7 +28,7 @@ public class PenalyToDataBase {
 
     private static Connection con_my;
 
-    private static String sPath = "/Users/neo/Downloads/20161123/NPN1121.xls";
+    private static String sPath = "/Users/neo/Downloads/20161123/NP2016-11-14.xls";
 
     static {
         try {

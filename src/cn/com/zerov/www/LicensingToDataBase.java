@@ -29,7 +29,7 @@ public class LicensingToDataBase {
 //
 //    private static Connection con_ser;
 
-    private static String sPath = "/Users/neo/Downloads/20161123/L1121.xls";
+    private static String sPath = "/Users/neo/Downloads/20161123/NL1121.xls";
 
     static {
         try {
