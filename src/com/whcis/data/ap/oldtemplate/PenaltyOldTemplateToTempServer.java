@@ -1,5 +1,5 @@
 
-package com.wuhancredit.www;
+package com.whcis.data.ap.oldtemplate;
 
 import jxl.Cell;
 import jxl.Sheet;
@@ -9,7 +9,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class PenalyWHToDatabase {
+public class PenaltyOldTemplateToTempServer {
 
     private static String url = "jdbc:mysql://localhost:3306/db_credit_test?useSSL=false";
 

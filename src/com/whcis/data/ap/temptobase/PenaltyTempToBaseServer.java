@@ -1,5 +1,5 @@
 
-package com.zerov.www;
+package com.whcis.data.ap.temptobase;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class SetPenalty {
+public class PenaltyTempToBaseServer {
 
     private static String url_my = "jdbc:mysql://localhost:3306/db_credit_test?useSSL=false";
 

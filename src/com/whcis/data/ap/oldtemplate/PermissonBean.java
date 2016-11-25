@@ -1,5 +1,5 @@
 
-package com.wuhancredit.www;
+package com.whcis.data.ap.oldtemplate;
 
 public class PermissonBean {
     private static PermissonBean pb;

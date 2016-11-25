@@ -1,5 +1,5 @@
 
-package com.zerov.www;
+package com.whcis.data.ap.temptobase;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class SetLicensing {
+public class LicensingTempToBaseServer {
     private static String url_my = "jdbc:mysql://localhost:3306/db_credit_test?useSSL=false";
 
     private static String user_my = "root";

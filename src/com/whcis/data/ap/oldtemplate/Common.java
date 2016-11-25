@@ -1,5 +1,5 @@
 
-package com.wuhancredit.www;
+package com.whcis.data.ap.oldtemplate;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

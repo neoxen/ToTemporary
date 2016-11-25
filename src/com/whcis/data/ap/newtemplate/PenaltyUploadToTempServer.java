@@ -1,24 +1,15 @@
-
 package com.whcis.data.ap.newtemplate;
-
-import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 
-public class PenaltyUploadToCreditHubei {
-    private static String url_ser = "jdbc:mysql://192.168.18.110:3306/upload_to_xychina?useSSL=false";
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
-    private static String user_ser = "zxdc";
+public class PenaltyUploadToTempServer {
 
-    private static String password_ser = "zxdc";
-
-    private static Connection con_ser;
-    
     private static String url_my = "jdbc:mysql://localhost:3306/db_credit_test?useSSL=false";
 
     private static String user_my = "root";
@@ -49,8 +40,7 @@ public class PenaltyUploadToCreditHubei {
 
     private static void openDatabase() {
         try {
-            con_ser = DriverManager.getConnection(url_ser, user_ser, password_ser);
-//            con_my = DriverManager.getConnection(url_my, user_my, password_my);
+            con_my = DriverManager.getConnection(url_my, user_my, password_my);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -80,23 +70,10 @@ public class PenaltyUploadToCreditHubei {
             if (PenaltyWHBean.CF_WSH.contains("表格说明") || PenaltyWHBean.isEmpty()) {
                 return;
             }
-            // 查重
-            ResultSet rs = con_ser.createStatement().executeQuery("select count(*) as rowCount from penaly_tem where " + PenaltyWHBean.toID());
-            // System.out.println("select count(*) as rowCount from penaly_tem where "
-            // + PenaltyWHBean.toID());
-            rs.next();
-            if (rs.getInt("rowCount") > 0) {
-                System.out.println(PenaltyWHBean.toValues());
-                return;
-            }
-            con_ser.createStatement()
+            con_my.createStatement()
                     .execute(
-                            "INSERT INTO penaly_tem (`CF_WSH`,`CF_CFMC`,`CF_CFLB1`,`CF_CFLB2`,`CF_SY`,`CF_YJ`,`CF_XDR_MC`,`CF_XDR_SHXYM`,`CF_XDR_ZDM`,`CF_XDR_GSDJ`,`CF_XDR_SWDJ`,`CF_XDR_SFZ`,`CF_FR`,`CF_JG`,`CF_JDRQ`,`CF_XZJG`,`CF_ZT`,`DFBM`,`SJC`,`BZ`) VALUES "
+                            "INSERT INTO tab_penaly_wuhan_month (`CF_WSH`,`CF_CFMC`,`CF_CFLB1`,`CF_CFLB2`,`CF_SY`,`CF_YJ`,`CF_XDR_MC`,`CF_XDR_SHXYM`,`CF_XDR_ZDM`,`CF_XDR_GSDJ`,`CF_XDR_SWDJ`,`CF_XDR_SFZ`,`CF_FR`,`CF_JG`,`CF_JDRQ`,`CF_XZJG`,`CF_ZT`,`DFBM`,`SJC`,`BZ`) VALUES "
                                     + PenaltyWHBean.toValues());
-//            con_my.createStatement()
-//                    .execute(
-//                            "INSERT INTO tab_penaly_wuhan_month (`CF_WSH`,`CF_CFMC`,`CF_CFLB1`,`CF_CFLB2`,`CF_SY`,`CF_YJ`,`CF_XDR_MC`,`CF_XDR_SHXYM`,`CF_XDR_ZDM`,`CF_XDR_GSDJ`,`CF_XDR_SWDJ`,`CF_XDR_SFZ`,`CF_FR`,`CF_JG`,`CF_JDRQ`,`CF_XZJG`,`CF_ZT`,`DFBM`,`SJC`,`BZ`) VALUES "
-//                                    + PenaltyWHBean.toValues());
         } catch (Exception e) {
             e.printStackTrace();
             System.out
