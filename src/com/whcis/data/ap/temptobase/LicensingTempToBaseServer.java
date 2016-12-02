@@ -31,7 +31,6 @@ public class LicensingTempToBaseServer {
     static HashMap<String, Integer> abbr_name = new HashMap<String, Integer>();
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
         System.out.println("Importing to server ... ...");
         initDataBase();
         getName();
@@ -123,10 +122,10 @@ public class LicensingTempToBaseServer {
                             + importDate()
                             + ")";
 
-                    // 查重
+                    // duplication check
                     ResultSet rs = con_ser.createStatement().executeQuery(
                             "select count(*) as rowCount from ap_administrative_licensing_temp where "
-                                    + toID(rs_my.getString("XK_WSH"), rs_my.getString("XK_XMMC"), rs_my.getString("XK_NR"), rs_my.getString("XK_XDR")));
+                                    + toID(rs_my.getString("XK_WSH"), rs_my.getString("XK_XMMC"), rs_my.getString("XK_NR"), rs_my.getString("XK_XDR"), rs_my.getString("XK_XDR_SFZ")));
                     rs.next();
                     if (rs.getInt("rowCount") > 0) {
                         System.out.println(rs_my.getInt("id") + " duplicated");
@@ -219,7 +218,6 @@ public class LicensingTempToBaseServer {
     }
 
     private static String withNullDate(Date date) {
-        // TODO Auto-generated method stub
         if (date == null)
             return "null";
         return "'" + sdf1.format(date) + "'";
@@ -238,8 +236,7 @@ public class LicensingTempToBaseServer {
         }
     }
 
-    public static String toID(String XK_WSH, String XK_XMMC, String XK_NR, String XK_XDR) {
-        // TODO Auto-generated method stub
+    public static String toID(String XK_WSH, String XK_XMMC, String XK_NR, String XK_XDR, String XK_XDR_SFZ) {
         String s = "";
         boolean isFrist = true;
         if (XK_WSH != null) {
@@ -268,6 +265,14 @@ public class LicensingTempToBaseServer {
                 isFrist = false;
             } else {
                 s = s + " AND object_name='" + XK_XDR + "'";
+            }
+        }
+        if (XK_XDR_SFZ != null) {
+            if (isFrist) {
+                s = s + " identity_code ='" + XK_XDR_SFZ + "'";
+                isFrist = false;
+            } else {
+                s = s + " AND identity_code='" + XK_XDR_SFZ + "'";
             }
         }
         return s;

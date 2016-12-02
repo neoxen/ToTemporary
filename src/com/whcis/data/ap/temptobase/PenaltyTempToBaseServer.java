@@ -36,7 +36,6 @@ public class PenaltyTempToBaseServer {
     static HashMap<String, Integer> abbr_name = new HashMap<String, Integer>();
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
         System.out.println("Importing to server ... ...");
         initDataBase();
         getName();
@@ -175,7 +174,6 @@ public class PenaltyTempToBaseServer {
     }
 
     private static String toID(String CF_WSH, String CF_CFMC, String CF_SY, String CF_XDR_MC, String CF_JG) {
-        // TODO Auto-generated method stub
         String s = "";
         boolean isFrist = true;
         if (CF_WSH != null) {
@@ -270,7 +268,6 @@ public class PenaltyTempToBaseServer {
     }
 
     private static String withNullDate(Date date) {
-        // TODO Auto-generated method stub
         if (date == null)
             return "null";
         return "'" + sdf1.format(date) + "'";

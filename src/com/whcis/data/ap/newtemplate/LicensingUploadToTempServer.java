@@ -20,7 +20,7 @@ public class LicensingUploadToTempServer {
 
     private static Connection con_my;
 
-    private static String sPath = "/Users/neo/Downloads/20161123/NL2016-11-14.xls";
+    private static String sPath = "/Users/neo/Downloads/20161202/N1128.xls";
 
     static {
         try {
@@ -31,10 +31,9 @@ public class LicensingUploadToTempServer {
     }
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
-        // 打开数据库
+        // open connection
         openDatabase();
-        // 写入数据
+        // write data
         writeToDatabase();
 
         System.out.println("OK!");
@@ -59,15 +58,14 @@ public class LicensingUploadToTempServer {
                     Cell cell = readsheet.getCell(j, i);
                     LicensingWHBean.setX(j, cell.getContents());
                 }
-                insertINTO();
-                // System.exit(0);
+                insertINTO(i);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void insertINTO() {
+    private static void insertINTO(int intRow) {
         try {
             if (LicensingWHBean.XK_WSH.contains("表格说明") || LicensingWHBean.isEmpty()) {
                 return;
@@ -79,8 +77,8 @@ public class LicensingUploadToTempServer {
 
         } catch (Exception e) {
             System.out
-                    .println("INSERT INTO tab_permisson_wuhan_month (`XK_WSH`,`XK_XMMC`,`XK_SPLB`,`XK_NR`,`XK_XDR`,`XK_XDR_SHXYM`,`XK_XDR_ZDM`,`XK_XDR_GSDJ`,`XK_XDR_SWDJ`,`XK_XDR_SFZ`,`XK_FR`,`XK_JDRQ`,`XK_JZQ`,`XK_XZJG`,`XK_ZT`,`DFBM`,`SJC`,`BZ`) VALUES "
-                            + LicensingWHBean.toValues());
+                    .println(
+                            intRow + " Insert failed: " + LicensingWHBean.toValues());
             e.printStackTrace();
         } finally {
             LicensingWHBean.clean();

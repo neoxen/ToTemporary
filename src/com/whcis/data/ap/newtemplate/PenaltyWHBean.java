@@ -148,7 +148,6 @@ public class PenaltyWHBean {
     }
 
     public static String toID() {
-        // TODO Auto-generated method stub
         String s = "";
         boolean isFrist = true;
         if (!CF_WSH.equals("null")) {

@@ -12,14 +12,6 @@ import jxl.Workbook;
 
 public class LicensingUploadToCreditHubei {
 
-     private static String url_my =
-     "jdbc:mysql://localhost:3306/db_credit_test?useSSL=false";
-    
-     private static String user_my = "root";
-    
-     private static String password_my = "kaifa001";
-    
-     private static Connection con_my;
 
     private static String url_ser = "jdbc:mysql://192.168.18.110:3306/upload_to_xychina?useSSL=false";
 
@@ -29,7 +21,7 @@ public class LicensingUploadToCreditHubei {
 
     private static Connection con_ser;
 
-    private static String sPath = "/Users/neo/Downloads/20161123/NL2016-11-14.xls";
+    private static String sPath = "/Users/neo/Downloads/20161202/NL2016-11-29.xls";
 
     static {
         try {
@@ -40,10 +32,9 @@ public class LicensingUploadToCreditHubei {
     }
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
-        // 打开数据库
+        // open connection
         openDatabase();
-        // 写入数据
+        // write data
         writeToDatabase();
 
         System.out.println("OK!");
@@ -52,8 +43,6 @@ public class LicensingUploadToCreditHubei {
     private static void openDatabase() {
         try {
             con_ser = DriverManager.getConnection(url_ser, user_ser, password_ser);
-//             con_my = DriverManager.getConnection(url_my, user_my,
-//             password_my);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -70,42 +59,36 @@ public class LicensingUploadToCreditHubei {
                     Cell cell = readsheet.getCell(j, i);
                     LicensingWHBean.setX(j, cell.getContents());
                 }
-                insertINTO();
-                // System.exit(0);
+                insertINTO(i);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void insertINTO() {
+    private static void insertINTO(int intRow) {
         try {
             if (LicensingWHBean.XK_WSH.contains("表格说明") || LicensingWHBean.isEmpty()) {
                 return;
             }
-            // 查重
+            // duplication check
             ResultSet rs = con_ser.createStatement().executeQuery("select count(*) as rowCount from licensing_tem where " + LicensingWHBean.toID());
             // ResultSet rs =
             // con_my.createStatement().executeQuery("select count(*) as rowCount from licensing_tem where "
             // + LicensingWHBean.toID());
             rs.next();
             if (rs.getInt("rowCount") > 0) {
-                System.out.println(LicensingWHBean.toValues());
+                System.out.println(intRow + " Record duplicated: " + LicensingWHBean.toValues());
                 return;
             }
             con_ser.createStatement()
                     .execute(
                             "INSERT INTO licensing_tem (`XK_WSH`,`XK_XMMC`,`XK_SPLB`,`XK_NR`,`XK_XDR`,`XK_XDR_SHXYM`,`XK_XDR_ZDM`,`XK_XDR_GSDJ`,`XK_XDR_SWDJ`,`XK_XDR_SFZ`,`XK_FR`,`XK_JDRQ`,`XK_JZQ`,`XK_XZJG`,`XK_ZT`,`DFBM`,`SJC`,`BZ`) VALUES "
                                     + LicensingWHBean.toValues());
-//            con_my.createStatement()
-//                    .execute(
-//                            "INSERT INTO tab_permisson_wuhan_month (`XK_WSH`,`XK_XMMC`,`XK_SPLB`,`XK_NR`,`XK_XDR`,`XK_XDR_SHXYM`,`XK_XDR_ZDM`,`XK_XDR_GSDJ`,`XK_XDR_SWDJ`,`XK_XDR_SFZ`,`XK_FR`,`XK_JDRQ`,`XK_JZQ`,`XK_XZJG`,`XK_ZT`,`DFBM`,`SJC`,`BZ`) VALUES "
-//                                    + LicensingWHBean.toValues());
 
         } catch (Exception e) {
             System.out
-                    .println("INSERT INTO tab_permisson_wuhan_month (`XK_WSH`,`XK_XMMC`,`XK_SPLB`,`XK_NR`,`XK_XDR`,`XK_XDR_SHXYM`,`XK_XDR_ZDM`,`XK_XDR_GSDJ`,`XK_XDR_SWDJ`,`XK_XDR_SFZ`,`XK_FR`,`XK_JDRQ`,`XK_JZQ`,`XK_XZJG`,`XK_ZT`,`DFBM`,`SJC`,`BZ`) VALUES "
-                            + LicensingWHBean.toValues());
+                    .println(intRow + " Insert failed: " + LicensingWHBean.toValues());
             e.printStackTrace();
         } finally {
             LicensingWHBean.clean();
