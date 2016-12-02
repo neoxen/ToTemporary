@@ -139,7 +139,6 @@ public class LicensingWHBean {
     }
 
     public static String toID() {
-        // TODO Auto-generated method stub
         String s = "";
         boolean isFrist = true;
         if (!XK_WSH.equals("null")) {
@@ -168,6 +167,14 @@ public class LicensingWHBean {
                 isFrist = false;
             } else {
                 s = s + " AND XK_XDR=" + XK_XDR;
+            }
+        }
+        if (!XK_XDR_SFZ.equals("null")) {
+            if (isFrist) {
+                s = s + " XK_XDR_SFZ=" + XK_XDR_SFZ;
+                isFrist = false;
+            } else {
+                s = s + " AND XK_XDR_SFZ=" + XK_XDR_SFZ;
             }
         }
         return s;
