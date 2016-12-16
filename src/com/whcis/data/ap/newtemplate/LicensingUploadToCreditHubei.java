@@ -28,7 +28,7 @@ public class LicensingUploadToCreditHubei {
     private static Connection con_ser;
 
 //    private static String sPath = "/Users/neo/Downloads/20161202/N2016-11-30.xls";
-    private static String sPath = "/Users/miracle/Downloads/20161207/N2016-11-30.xls";
+    private static String sPath = "/Users/neo/Downloads/20161216/N2016-12-07.xls";
 
     static {
         try {
