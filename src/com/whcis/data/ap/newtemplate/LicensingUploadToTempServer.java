@@ -21,7 +21,7 @@ public class LicensingUploadToTempServer {
     private static Connection con_my;
 
 //    private static String sPath = "/Users/neo/Downloads/20161202/N1128.xls";
-    private static String sPath = "/Users/neo/Downloads/20161216/N1212-taiwan.xls";
+    private static String sPath = "/Users/neo/Downloads/20161221/N1219.xls";
 
     static {
         try {

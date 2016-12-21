@@ -18,7 +18,7 @@ public class LicensingOldTemplateToTempServer {
     private static Connection con;
 
 //    private static String sPath = "/Users/neo/Downloads/20161202/O1128.xls";
-    private static String sPath = "/Users/neo/Downloads/20161216/O1212.xls";
+    private static String sPath = "/Users/neo/Downloads/20161221/O1219.xls";
 
     static {
         try {
