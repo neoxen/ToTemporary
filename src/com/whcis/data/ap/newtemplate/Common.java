@@ -12,10 +12,35 @@ public class Common {
 
     static SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy.MM.dd");
 
+    static SimpleDateFormat sdf4 = new SimpleDateFormat("yyyy.MM");
+
+    static SimpleDateFormat sdf5 = new SimpleDateFormat("yyyy年MM月dd日");
+
+    static SimpleDateFormat sdf6 = new SimpleDateFormat("yyyy,MM,dd");
+
     public static String sToDate(String s) {
         s = s.trim().replace(" ", "");
         if (s.equals("长期")) {
             return "'2099-12-31'";
+        }
+        if (s.equals("\\")) {
+            return null;
+        }
+
+        if (s.equals("/")) {
+            return null;
+        }
+
+        if (s.equals("空")) {
+            return null;
+        }
+
+        if (s.indexOf("-") == 2 || s.indexOf("/") == 2 || s.indexOf(".") == 2) {
+            s = "20" + s;
+        }
+
+        if (s.contains("00:00:00.0")) {
+            s = s.substring(0, s.indexOf("00:00:00.0"));
         }
         try {
             Date date = new Date(sdf1.parse(s).getTime());
@@ -35,7 +60,25 @@ public class Common {
         } catch (Exception e) {
 
         }
-        // System.out.println(s);
+        try {
+            Date date = new Date(sdf4.parse(s).getTime());
+            return "'" + sdf1.format(date) + "'";
+        } catch (Exception e) {
+
+        }
+        try {
+            Date date = new Date(sdf5.parse(s).getTime());
+            return "'" + sdf1.format(date) + "'";
+        } catch (Exception e) {
+
+        }
+        try {
+            Date date = new Date(sdf6.parse(s).getTime());
+            return "'" + sdf1.format(date) + "'";
+        } catch (Exception e) {
+
+        }
+        System.out.println(s);
         return "null";
     }
 
