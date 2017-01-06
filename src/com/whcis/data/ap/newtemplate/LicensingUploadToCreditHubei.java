@@ -28,7 +28,7 @@ public class LicensingUploadToCreditHubei {
     private static Connection con_ser;
 
 //    private static String sPath = "/Users/neo/Downloads/20161202/N2016-11-30.xls";
-    private static String sPath = "/Users/neo/Downloads/20161227/N2016-12-21.xls";
+    private static String sPath = "/Users/neo/Downloads/20170106/N2016-12-27.xls";
 
     static {
         try {
@@ -74,6 +74,7 @@ public class LicensingUploadToCreditHubei {
     }
 
     private static void insertINTO(int intRow) {
+        int index = intRow + 1;
         try {
             if (LicensingWHBean.XK_WSH.contains("表格说明") || LicensingWHBean.isEmpty()) {
                 return;
@@ -85,7 +86,7 @@ public class LicensingUploadToCreditHubei {
             // + LicensingWHBean.toID());
             rs.next();
             if (rs.getInt("rowCount") > 0) {
-                System.out.println(intRow + " Record duplicated: " + LicensingWHBean.toValues());
+                System.out.println(index + " Record duplicated: " + LicensingWHBean.toValues());
                 return;
             }
             con_ser.createStatement()
@@ -95,7 +96,7 @@ public class LicensingUploadToCreditHubei {
 
         } catch (Exception e) {
             System.out
-                    .println(intRow + " Insert failed: " + LicensingWHBean.toValues());
+                    .println(index + " Insert failed: " + LicensingWHBean.toValues());
             e.printStackTrace();
         } finally {
             LicensingWHBean.clean();

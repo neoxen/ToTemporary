@@ -27,7 +27,7 @@ public class PenaltyUploadToCreditHubei {
 
 
 //    private static String sPath = "/Users/neo/Downloads/20161202/N2016-11-30.xls";
-    private static String sPath = "/Users/neo/Downloads/20161227/N2016-12-21.xls";
+    private static String sPath = "/Users/neo/Downloads/20170106/N2016-12-27.xls";
 
     static {
         try {
@@ -73,6 +73,7 @@ public class PenaltyUploadToCreditHubei {
     }
 
     private static void insertINTO(int intRow) {
+        int index = intRow + 1;
         try {
             if (PenaltyWHBean.CF_WSH.contains("表格说明") || PenaltyWHBean.isEmpty()) {
                 return;
@@ -81,7 +82,7 @@ public class PenaltyUploadToCreditHubei {
             ResultSet rs = con_ser.createStatement().executeQuery("select count(*) as rowCount from penaly_tem where " + PenaltyWHBean.toID());
             rs.next();
             if (rs.getInt("rowCount") > 0) {
-                System.out.println(intRow + " Record duplicated: " + PenaltyWHBean.toValues());
+                System.out.println(index + " Record duplicated: " + PenaltyWHBean.toValues());
                 return;
             }
             con_ser.createStatement()
@@ -91,7 +92,7 @@ public class PenaltyUploadToCreditHubei {
         } catch (Exception e) {
             e.printStackTrace();
             System.out
-                    .println(intRow + " Insert failed: " + PenaltyWHBean.toValues());
+                    .println(index + " Insert failed: " + PenaltyWHBean.toValues());
         } finally {
             PenaltyWHBean.clean();
         }
