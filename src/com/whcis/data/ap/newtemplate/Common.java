@@ -24,15 +24,15 @@ public class Common {
             return "'2099-12-31'";
         }
         if (s.equals("\\")) {
-            return null;
+            return "null";
         }
 
         if (s.equals("/")) {
-            return null;
+            return "null";
         }
 
         if (s.equals("空")) {
-            return null;
+            return "null";
         }
 
         if (s.indexOf("-") == 2 || s.indexOf("/") == 2 || s.indexOf(".") == 2) {

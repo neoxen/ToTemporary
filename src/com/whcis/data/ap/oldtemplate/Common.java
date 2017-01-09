@@ -25,15 +25,15 @@ public class Common {
         }
 
         if (s.equals("\\")) {
-            return null;
+            return "null";
         }
 
         if (s.equals("/")) {
-            return null;
+            return "null";
         }
 
         if (s.equals("空")) {
-            return null;
+            return "null";
         }
 
         if (s.indexOf("-") == 2 || s.indexOf("/") == 2 || s.indexOf(".") == 2) {
