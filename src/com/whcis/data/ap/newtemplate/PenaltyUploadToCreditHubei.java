@@ -27,7 +27,7 @@ public class PenaltyUploadToCreditHubei {
 
 
 //    private static String sPath = "/Users/neo/Downloads/20161202/N2016-11-30.xls";
-    private static String sPath = "/Users/neo/Downloads/20170106/N2016-12-27.xls";
+    private static String sPath = "/Users/neo/Downloads/20170111/N2017-01-05.xls";
 
     static {
         try {
